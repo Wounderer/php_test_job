@@ -171,7 +171,7 @@ class YoutubeWorkerComponent extends \yii\base\Component
      * @return bool
      */
     public function isValidTask()  {
-        return ( array_key_exists( $this->sTargetCodec.$this->sTargetQuality, $this->aAvailableUrls ) );
+        return !empty( $this->aAvailableIds ) && array_key_exists( $this->sTargetCodec.$this->sTargetQuality, $this->aAvailableUrls );
     }
 
     /**

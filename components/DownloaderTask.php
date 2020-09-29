@@ -21,6 +21,13 @@ class DownloaderTask extends BaseObject implements JobInterface
 
     }
 
+    /**
+     * @return string
+     */
+    public function getPreviewUrl() {
+        return "https://img.youtube.com/vi/".$this->videoId."/default.jpg";
+
+    }
     public function generateSnippet() {
         $sType = explode( $this->filename, "." )[1];
         $sHtml = '<video width="320" height="240" controls><source src="'.$this->path.$this->filename.'" type="video/'.$sType.'">Your browser does not support the video tag.</video>';
