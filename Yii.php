@@ -16,6 +16,7 @@ class Yii extends \yii\BaseYii
  * Include only Console application related components here
  *
  * @property \app\components\YoutubeWorkerComponent $downloader
+ * @property \yii\queue\Queue $queue
  */
 class ConsoleApplication extends yii\console\Application
 {

@@ -2,6 +2,7 @@
 namespace app\components;
 
 use app\components\DownloaderTask;
+use app\models\Tasks;
 use yii\console\Exception;
 use YouTube\YouTubeDownloader;
 use linslin\yii2\curl;
@@ -206,18 +207,20 @@ class YoutubeWorkerComponent extends \yii\base\Component
     public function createTask( $sStorageType ) {
         $aReturnTasks = [];
         if ( array_key_exists( $sStorageType, $this->storages ) && $this->storages[ $sStorageType ] !== false ) {
-            switch ($sStorageType) {
-                case self::STORAGE_LOCAL:
-                    if ( !empty( $this->aAvailableIds ) ) {
-                        foreach ( $this->aAvailableIds as $sId ) {
-                           $aReturnTasks[] = new DownloaderTaskLocalFs(["url" => $this->getDownloadUrl( $sId ), "filename"=>$this->createFilename( $sId ), "path" => $this->storages[ self::STORAGE_LOCAL ]["path"], "videoId" => $sId ]);
-                        }
-                    }
-                case self::STORAGE_GRIVE:
-
-                case self::STORAGE_S3:
-
-                default:
+            if ( !empty( $this->aAvailableIds ) ) {
+                foreach ( $this->aAvailableIds as $sId ) {
+                    $aReturnTasks[] = new DownloaderTask(
+                        [
+                            'storage_name' => $sStorageType,
+                            "url" => $this->getDownloadUrl( $sId ),
+                            "filename"=>$this->createFilename( $sId ),
+                            "path" => $this->storages[ $sStorageType]["path"],
+                            "videoId" => $sId,
+                            "codec" => $this->sTargetCodec,
+                            'quality' => $this->sTargetQuality
+                        ]
+                    );
+                }
             }
         } else {
             throw new Exception( "Storage type is incorrect or disabled" );

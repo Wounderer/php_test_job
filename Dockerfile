@@ -29,7 +29,7 @@ RUN apt-get update && \
             nano redis \
             unzip \
             libcurl4-openssl-dev \
-            libssl-dev php7.4 php7.4-cli php7.4-dom php7.4-curl php7.4-xml php7.4-mbstring composer \
+            libssl-dev php7.4 php7.4-cli php7.4-dom php7.4-curl php7.4-xml php7.4-mbstring php7.4-sqlite3 composer \
         --no-install-recommends && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
